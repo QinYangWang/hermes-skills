@@ -1,213 +1,314 @@
 ---
 name: notion-style-frontend
-description: 当编写前端页面或 UI 组件时，必须采用 Notion 风格的设计规范。
+description: "Use whenever building Notion-inspired web UIs. Covers warm neutrals, NotionInter typography, whisper-thin borders, multi-layer shadows, pill badges, and responsive layout principles."
 ---
 
-# Notion 风格前端开发规范
+# Design System Inspired by Notion
 
-## 触发条件
-在撰写以下任何前端代码时，必须将本 skill 作为设计约束：
-- 网页、Web App、管理后台、文档工具
-- React/Vue/Svelte 等前端框架的组件
-- 任何需要 HTML/CSS 的界面
+## 1. Visual Theme & Atmosphere
 
-## 核心设计原则
-1. **极简主义 (Minimalist)** — 减少装饰，内容为王。
-2. **无干扰界面** — 避免浓烈颜色、深色边框、强烈阴影。
-3. **块级思维 (Block-based)** — 页面由可拖拽的块/卡片组成，每个块独立且通透。
-4. **呼吸感 (Breathing Room)** — 大量留白，元素之间有明确的视觉层次。
+Notion's website embodies the philosophy of the tool itself: a blank canvas that gets out of your way. The design system is built on warm neutrals rather than cold grays, creating a distinctly approachable minimalism that feels like quality paper rather than sterile glass. The page canvas is pure white (`#ffffff`) but the text isn't pure black -- it's a warm near-black (`rgba(0,0,0,0.95)`) that softens the reading experience imperceptibly. The warm gray scale (`#f6f5f4`, `#31302e`, `#615d59`, `#a39e98`) carries subtle yellow-brown undertones, giving the interface a tactile, almost analog warmth.
 
-## 具体规范
+The custom NotionInter font (a modified Inter) is the backbone of the system. At display sizes (64px), it uses aggressive negative letter-spacing (-2.125px), creating headlines that feel compressed and precise. The weight range is broader than typical systems: 400 for body, 500 for UI elements, 600 for semi-bold labels, and 700 for display headings. OpenType features `"lnum"` (lining numerals) and `"locl"` (localized forms) are enabled on larger text, adding typographic sophistication that rewards close reading.
 
-### 1. 配色系统 (Color Tokens)
-Notion 不用纯黑纯白，采用"灰色阶梯"与"柔和色" 。
+What makes Notion's visual language distinctive is its border philosophy. Rather than heavy borders or shadows, Notion uses ultra-thin `1px solid rgba(0,0,0,0.1)` borders -- borders that exist as whispers, barely perceptible division lines that create structure without weight. The shadow system is equally restrained: multi-layer stacks with cumulative opacity never exceeding 0.05, creating depth that's felt rather than seen.
 
-| 用途 | 颜色值 | 说明 |
-|------|--------|------|
-| 主文字 | `#37352f` | 接近黑的深灰，不刺眼 |
-| 次文字 | `#9b9a97` | 中性灰，用于描述、时间戳 |
-| 背景色 | `#ffffff` | 纯白主内容区 |
-| 侧边栏背景 | `#f7f6f3` | 微暖的米灰，赋予温感 |
-| Hover 背景 | `rgba(55, 53, 47, 0.08)` | 极淡的灰色遮罩 |
-| 边框色 | `rgba(55, 53, 47, 0.16)` | 几乎看不见的细边框 |
-| 分隔线 | `rgba(55, 53, 47, 0.09)` | 更淡的分隔 |
+**Key Characteristics:**
+- NotionInter (modified Inter) with negative letter-spacing at display sizes (-2.125px at 64px)
+- Warm neutral palette: grays carry yellow-brown undertones (`#f6f5f4` warm white, `#31302e` warm dark)
+- Near-black text via `rgba(0,0,0,0.95)` -- not pure black, creating micro-warmth
+- Ultra-thin borders: `1px solid rgba(0,0,0,0.1)` throughout -- whisper-weight division
+- Multi-layer shadow stacks with sub-0.05 opacity for barely-there depth
+- Notion Blue (`#0075de`) as the singular accent color for CTAs and interactive elements
+- Pill badges (9999px radius) with tinted blue backgrounds for status indicators
+- 8px base spacing unit with an organic, non-rigid scale
 
-**Dark Mode 变体**：
-- 主文字：`rgba(255, 255, 255, 0.9)`
-- 背景：`#191919`
-- 侧边栏：`#202020`
-- Hover：`rgba(255, 255, 255, 0.1)`
+## 2. Color Palette & Roles
 
-### 2. 字体与排版 (Typography)
-- **字体族**：`幼圆 / -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif`
-- **字重**：主体 `400`，标题 `600`，不使用过细 (`300`)
-- **行高 (Line Height)**：正文 `1.5`，标题 `1.2`
-- **字号阶梯**：
-  - H1: `2.5rem` (40px)
-  - H2: `1.875rem` (30px)
-  - H3: `1.5rem` (24px)
-  - 正文: `1rem` (16px)
-  - 辅助文字: `0.875rem` (14px)
-  - 很小（时间戳）: `0.75rem` (12px)
+### Primary
+- **Notion Black** (`rgba(0,0,0,0.95)` / `#000000f2`): Primary text, headings, body copy. The 95% opacity softens pure black without sacrificing readability.
+- **Pure White** (`#ffffff`): Page background, card surfaces, button text on blue.
+- **Notion Blue** (`#0075de`): Primary CTA, link color, interactive accent -- the only saturated color in the core UI chrome.
 
-### 3. 间距与布局 (Spacing & Layout)
-- **页面最大宽度**：`900px` — `960px`，居中对齐。
-- **页面内边距 (Padding)**：水平方向 `min 24px`。
-- **块与块之间 (Block Gap)**：`8px`（紧凑）。
-- **大段落间距 (Section Gap)**：`24px`。
-- **边距应用“整数倍数法”**：以 `4px` 为基础单位。
+### Brand Secondary
+- **Deep Navy** (`#213183`): Secondary brand color, used sparingly for emphasis and dark feature sections.
+- **Active Blue** (`#005bab`): Button active/pressed state -- darker variant of Notion Blue.
 
-### 4. 布局与页面结构 (Layout & Architecture)
-Notion 的界面不是组件的堆叠，而是一套有严格组织规律的空间系统。
+### Warm Neutral Scale
+- **Warm White** (`#f6f5f4`): Background surface tint, section alternation, subtle card fill. The yellow undertone is key.
+- **Warm Dark** (`#31302e`): Dark surface background, dark section text. Warmer than standard grays.
+- **Warm Gray 500** (`#615d59`): Secondary text, descriptions, muted labels.
+- **Warm Gray 300** (`#a39e98`): Placeholder text, disabled states, caption text.
 
-#### 整体框架
-- **两栏式（或三栏式）：左侧固定/可折叠边栏 + 右侧主内容区**
-- **边栏宽度**：标准 `240px`，支持用户拖拽调整（约 `200px` — `320px`）
-- **顶部无传统导航栏**：页面标题和面包屑直接放在内容区顶部
-- **主内容区**：`flex: 1`，独立滚动，不带顶部固定导航
+### Semantic Accent Colors
+- **Teal** (`#2a9d99`): Success states, positive indicators.
+- **Green** (`#1aae39`): Confirmation, completion badges.
+- **Orange** (`#dd5b00`): Warning states, attention indicators.
+- **Pink** (`#ff64c8`): Decorative accent, feature highlights.
+- **Purple** (`#391c57`): Premium features, deep accents.
+- **Brown** (`#523410`): Earthy accent, warm feature sections.
 
-#### 侧边栏 (Sidebar)
-- **背景色**：`#f7f6f3` (或 dark `#202020`)
-- **顶部区域**：工作区名称 + 用户头像，配很小的 `chevron-down` (`12px`)
-- **页面树 (Page Tree)**：无限层级的可折叠树状结构
-  - 每个节点：展开三角 + emoji 图标 + 页面标题
-  - 子页面缩进：`padding-left: 20px`
-  - hover 整行高亮，右侧出现 `"..."` 操作按钮
-  - 当前选中页：背景略深 (`rgba(55,53,47,0.14)`)
-- **可拖拽排序**：支持拖拽节点重新排序或放入其他父页面
-- **底部工具**：新建页面、垃圾筒（小字文字链接）
+### Interactive
+- **Link Blue** (`#0075de`): Primary link color with underline-on-hover.
+- **Link Light Blue** (`#62aef0`): Lighter link variant for dark backgrounds.
+- **Focus Blue** (`#097fe8`): Focus ring on interactive elements.
+- **Badge Blue Bg** (`#f2f9ff`): Pill badge background, tinted blue surface.
+- **Badge Blue Text** (`#097fe8`): Pill badge text, darker blue for readability.
 
-#### 页面头部 (Page Header)
-- **面包屑 (Breadcrumbs)**：位于内容区最顶，字号 `14px`
-  - 用 `>` 或 `/` 分隔，颜色非常淡（`#9b9a97`）
-  - 每个节点可点击，hover 时可能出现下划线
-- **页面封面图**（可选）：居中显示在内容区顶部，宽 `100%`，高 `200px` — `300px`，无圆角，与边缘无间距
-- **页面图标 (Emoji)**：位于标题正上方或左侧，大小 `40px` — `48px`
-- **页面标题**：H1 级别，`无边框输入框`，可直接点击编辑
+### Shadows & Depth
+- **Card Shadow** (`rgba(0,0,0,0.04) 0px 4px 18px, rgba(0,0,0,0.027) 0px 2.025px 7.84688px, rgba(0,0,0,0.02) 0px 0.8px 2.925px, rgba(0,0,0,0.01) 0px 0.175px 1.04062px`): Multi-layer card elevation.
+- **Deep Shadow** (`rgba(0,0,0,0.01) 0px 1px 3px, rgba(0,0,0,0.02) 0px 3px 7px, rgba(0,0,0,0.02) 0px 7px 15px, rgba(0,0,0,0.04) 0px 14px 28px, rgba(0,0,0,0.05) 0px 23px 52px`): Five-layer deep elevation for modals and featured content.
+- **Whisper Border** (`1px solid rgba(0,0,0,0.1)`): Standard division border -- cards, dividers, sections.
 
-#### 内容画布 (Content Canvas)
-- **块级布局**：每个内容块是独立行级元素
-  - hover 时左侧出现 `⋮⋮` 拖拽手柄（淡灰，`14px`）
-  - 块与块之间 `gap: 8px`
-  - 缩进层级用 `padding-left: 24px` 表示
-- **编辑状态**：
-  - 空块 placeholder："输入内容，或按下 '/' 查看命令"，颜色非常淡
-  - 选中块时整行淡蓝色高亮
-  - 拖拽时出现蓝色细线占位符
-- **Slash Command 菜单**：在光标位置浮动弹出，宽度 `320px`
+## 3. Typography Rules
 
-#### 响应式布局
-- **桌面（≥1280px）**：侧边栏常驻
-- **平板（768px — 1279px）**：侧边栏折叠成约 `60px` 图标栏，或隐藏由汉堡菜单触发
-- **移动端（<768px）**：侧边栏变为全屏抽屉，主内容全宽，顶部只保留汉堡菜单按钮
+### Font Family
+- **Primary**: `NotionInter`, with fallbacks: `Inter, -apple-system, system-ui, Segoe UI, Helvetica, Apple Color Emoji, Arial, Segoe UI Emoji, Segoe UI Symbol`
+- **OpenType Features**: `"lnum"` (lining numerals) and `"locl"` (localized forms) enabled on display and heading text.
 
-#### 空白状态与加载
-- **空白页面**：居中显示大 emoji 和淡灰色提示文字
-- **加载状态**：使用骨架屏或内容淡入，避免旋转 loading spinner
+### Hierarchy
 
-### 5. 组件样式 (Components)
-#### 按钮
-- **主按钮**：背景 `#37352f`，文字 `#fff`，圆角 `6px`，内边距 `6px 12px`
-- **次按钮**：背景透明，边框 `1px solid rgba(55,53,47,0.16)`，hover 时背景变 `#f7f6f3`
-- **Ghost 按钮**：无边框，hover 时出现淡灰背景
+| Role | Font | Size | Weight | Line Height | Letter Spacing | Notes |
+|------|------|------|--------|-------------|----------------|-------|
+| Display Hero | NotionInter | 64px (4.00rem) | 700 | 1.00 (tight) | -2.125px | Maximum compression, billboard headlines |
+| Display Secondary | NotionInter | 54px (3.38rem) | 700 | 1.04 (tight) | -1.875px | Secondary hero, feature headlines |
+| Section Heading | NotionInter | 48px (3.00rem) | 700 | 1.00 (tight) | -1.5px | Feature section titles, with `"lnum"` |
+| Sub-heading Large | NotionInter | 40px (2.50rem) | 700 | 1.50 | normal | Card headings, feature sub-sections |
+| Sub-heading | NotionInter | 26px (1.63rem) | 700 | 1.23 (tight) | -0.625px | Section sub-titles, content headers |
+| Card Title | NotionInter | 22px (1.38rem) | 700 | 1.27 (tight) | -0.25px | Feature cards, list titles |
+| Body Large | NotionInter | 20px (1.25rem) | 600 | 1.40 | -0.125px | Introductions, feature descriptions |
+| Body | NotionInter | 16px (1.00rem) | 400 | 1.50 | normal | Standard reading text |
+| Body Medium | NotionInter | 16px (1.00rem) | 500 | 1.50 | normal | Navigation, emphasized UI text |
+| Body Semibold | NotionInter | 16px (1.00rem) | 600 | 1.50 | normal | Strong labels, active states |
+| Body Bold | NotionInter | 16px (1.00rem) | 700 | 1.50 | normal | Headlines at body size |
+| Nav / Button | NotionInter | 15px (0.94rem) | 600 | 1.33 | normal | Navigation links, button text |
+| Caption | NotionInter | 14px (0.88rem) | 500 | 1.43 | normal | Metadata, secondary labels |
+| Caption Light | NotionInter | 14px (0.88rem) | 400 | 1.43 | normal | Body captions, descriptions |
+| Badge | NotionInter | 12px (0.75rem) | 600 | 1.33 | 0.125px | Pill badges, tags, status labels |
+| Micro Label | NotionInter | 12px (0.75rem) | 400 | 1.33 | 0.125px | Small metadata, timestamps |
 
-#### 输入框 / 编辑器
-- 无边框 (borderless)，聚焦时显示淡蓝色外发光 (`box-shadow: 0 0 0 1px rgba(35,131,226,0.57)`)
-- placeholder 颜色: `rgba(55, 53, 47, 0.35)`
-- 编辑器内容区使用紧凑的 `prose`。
+### Principles
+- **Compression at scale**: NotionInter at display sizes uses -2.125px letter-spacing at 64px, progressively relaxing to -0.625px at 26px and normal at 16px. The compression creates density at headlines while maintaining readability at body sizes.
+- **Four-weight system**: 400 (body/reading), 500 (UI/interactive), 600 (emphasis/navigation), 700 (headings/display). The broader weight range compared to most systems allows nuanced hierarchy.
+- **Warm scaling**: Line height tightens as size increases -- 1.50 at body (16px), 1.23-1.27 at sub-headings, 1.00-1.04 at display. This creates denser, more impactful headlines.
+- **Badge micro-tracking**: The 12px badge text uses positive letter-spacing (0.125px) -- the only positive tracking in the system, creating wider, more legible small text.
 
-#### 卡片 / Callout
-- 背景色比侧边栏更淡一点（如 `#f7f6f3` / `#f1f1ef` 等）
-- 左边颜色条 (`border-left: 4px solid`) 作为视觉标识
-- 圆角 `3px`
+## 4. Component Stylings
 
-#### Dropdown / Menu / Popover
-- 背景 `#fff`
-- 边框极细 (`1px solid rgba(55,53,47,0.09)`)
-- 圆角 `8px`
-- 项目 hover 背景 `rgba(55,53,47,0.06)`
+### Buttons
 
-### 6. 圆角与阴影 (Radius & Shadow)
-- **内容块 (Block)**：`border-radius: 3px`
-- **UI 控件 (Button/Input)**：`border-radius: 6px`
-- **弹窗/下拉菜单**：`border-radius: 8px`
-- **阴影调性**：不使用浓烈的 black shadow。可参考 Notion 级影：
-  ```css
-  box-shadow: rgba(15, 15, 15, 0.05) 0px 0px 0px 1px,
-              rgba(15, 15, 15, 0.1) 0px 3px 6px,
-              rgba(15, 15, 15, 0.2) 0px 9px 24px;
-  ```
+**Primary Blue**
+- Background: `#0075de` (Notion Blue)
+- Text: `#ffffff`
+- Padding: 8px 16px
+- Radius: 4px (subtle)
+- Border: `1px solid transparent`
+- Hover: background darkens to `#005bab`
+- Active: scale(0.9) transform
+- Focus: `2px solid` focus outline, `var(--shadow-level-200)` shadow
+- Use: Primary CTA ("Get Notion free", "Try it")
 
-### 7. 交互与动效 (Interactions)
-- **动效时长**：`150ms` — `200ms`
-- **过渡函数**：`ease-in-out` 或 `cubic-bezier(0.165, 0.84, 0.44, 1)`
-- **Hover 反馈**：颜色变化优先，避免大幅移动或缩放。
-- **Focus 状态**：蓝色发光边框 (`rgb(35, 131, 226)`)，不使用默认的 `outline`。
+**Secondary / Tertiary**
+- Background: `rgba(0,0,0,0.05)` (translucent warm gray)
+- Text: `#000000` (near-black)
+- Padding: 8px 16px
+- Radius: 4px
+- Hover: text color shifts, scale(1.05)
+- Active: scale(0.9) transform
+- Use: Secondary actions, form submissions
 
-## 技术实现指引
+**Ghost / Link Button**
+- Background: transparent
+- Text: `rgba(0,0,0,0.95)`
+- Decoration: underline on hover
+- Use: Tertiary actions, inline links
 
-### Tailwind CSS 配置示例
-```javascript
-module.exports = {
-  theme: {
-    extend: {
-      colors: {
-        notion: {
-          text: '#37352f',
-          'text-light': '#9b9a97',
-          bg: '#ffffff',
-          sidebar: '#f7f6f3',
-          border: 'rgba(55, 53, 47, 0.16)',
-          hover: 'rgba(55, 53, 47, 0.08)',
-          focus: 'rgb(35, 131, 226)',
-        },
-      },
-      borderRadius: {
-        'block': '3px',
-        'ui': '6px',
-        'menu': '8px',
-      },
-      maxWidth: {
-        'page': '900px',
-      },
-      fontFamily: {
-        sans: ['-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Helvetica', 'Arial', 'sans-serif'],
-      },
-    },
-  },
-}
-```
+**Pill Badge Button**
+- Background: `#f2f9ff` (tinted blue)
+- Text: `#097fe8`
+- Padding: 4px 8px
+- Radius: 9999px (full pill)
+- Font: 12px weight 600
+- Use: Status badges, feature labels, "New" tags
 
-### CSS 变量方案
-建议在 `:root` 中定义 CSS 变量，以便支持 Dark Mode：
-```css
-:root {
-  --notion-bg: #ffffff;
-  --notion-text: #37352f;
-  --notion-sidebar: #f7f6f3;
-  --notion-hover: rgba(55, 53, 47, 0.08);
-  --notion-border: rgba(55, 53, 47, 0.16);
-  --notion-focus: rgb(35, 131, 226);
-}
+### Cards & Containers
+- Background: `#ffffff`
+- Border: `1px solid rgba(0,0,0,0.1)` (whisper border)
+- Radius: 12px (standard cards), 16px (featured/hero cards)
+- Shadow: `rgba(0,0,0,0.04) 0px 4px 18px, rgba(0,0,0,0.027) 0px 2.025px 7.84688px, rgba(0,0,0,0.02) 0px 0.8px 2.925px, rgba(0,0,0,0.01) 0px 0.175px 1.04062px`
+- Hover: subtle shadow intensification
+- Image cards: 12px top radius, image fills top half
 
-[data-theme="dark"] {
-  --notion-bg: #191919;
-  --notion-text: rgba(255, 255, 255, 0.9);
-  --notion-sidebar: #202020;
-  --notion-hover: rgba(255, 255, 255, 0.1);
-  --notion-border: rgba(255, 255, 255, 0.14);
-  --notion-focus: rgb(35, 131, 226);
-}
-```
+### Inputs & Forms
+- Background: `#ffffff`
+- Text: `rgba(0,0,0,0.9)`
+- Border: `1px solid #dddddd`
+- Padding: 6px
+- Radius: 4px
+- Focus: blue outline ring
+- Placeholder: warm gray `#a39e98`
 
-### 推荐组件库
-- **shadcn/ui**：基础组件层首选，可复制修改源码匹配 Notion 风格。
-- **Novel / BlockNote**：如需编辑器功能，建议直接集成这些 Notion-style 编辑器组件库。
+### Navigation
+- Clean horizontal nav on white, not sticky
+- Brand logo left-aligned (33x34px icon + wordmark)
+- Links: NotionInter 15px weight 500-600, near-black text
+- Hover: color shift to `var(--color-link-primary-text-hover)`
+- CTA: blue pill button ("Get Notion free") right-aligned
+- Mobile: hamburger menu collapse
+- Product dropdowns with multi-level categorized menus
 
-## 检查清单
-提交前确认：
-- [ ] 背景是否过于花哨？ — 应以白/浅灰为主。
-- [ ] 文字是否用了纯黑 `#000000`？ — 应改为 `#37352f`。
-- [ ] 边框和阴影是否浓烈？ — 应追求"几乎看不见"。
-- [ ] 主内容宽度是否过宽？ — 建议不超过 `960px`。
-- [ ] 动效是否过于炫酷？ — 应短 (≠200ms) 且淡雅。
+### Image Treatment
+- Product screenshots with `1px solid rgba(0,0,0,0.1)` border
+- Top-rounded images: `12px 12px 0px 0px` radius
+- Dashboard/workspace preview screenshots dominate feature sections
+- Warm gradient backgrounds behind hero illustrations (decorative character illustrations)
+
+### Distinctive Components
+
+**Feature Cards with Illustrations**
+- Large illustrative headers (The Great Wave, product UI screenshots)
+- 12px radius card with whisper border
+- Title at 22px weight 700, description at 16px weight 400
+- Warm white (`#f6f5f4`) background variant for alternating sections
+
+**Trust Bar / Logo Grid**
+- Company logos (trusted teams section) in their brand colors
+- Horizontal scroll or grid layout with team counts
+- Metric display: large number + description pattern
+
+**Metric Cards**
+- Large number display (e.g., "$4,200 ROI")
+- NotionInter 40px+ weight 700 for the metric
+- Description below in warm gray body text
+- Whisper-bordered card container
+
+## 5. Layout Principles
+
+### Spacing System
+- Base unit: 8px
+- Scale: 2px, 3px, 4px, 5px, 6px, 7px, 8px, 11px, 12px, 14px, 16px, 24px, 32px
+- Non-rigid organic scale with fractional values (5.6px, 6.4px) for micro-adjustments
+
+### Grid & Container
+- Max content width: approximately 1200px
+- Hero: centered single-column with generous top padding (80-120px)
+- Feature sections: 2-3 column grids for cards
+- Full-width warm white (`#f6f5f4`) section backgrounds for alternation
+- Code/dashboard screenshots as contained with whisper border
+
+### Whitespace Philosophy
+- **Generous vertical rhythm**: 64-120px between major sections. Notion lets content breathe with vast vertical padding.
+- **Warm alternation**: White sections alternate with warm white (`#f6f5f4`) sections, creating gentle visual rhythm without harsh color breaks.
+- **Content-first density**: Body text blocks are compact (line-height 1.50) but surrounded by ample margin, creating islands of readable content in a sea of white space.
+
+### Border Radius Scale
+- Micro (4px): Buttons, inputs, functional interactive elements
+- Subtle (5px): Links, list items, menu items
+- Standard (8px): Small cards, containers, inline elements
+- Comfortable (12px): Standard cards, feature containers, image tops
+- Large (16px): Hero cards, featured content, promotional blocks
+- Full Pill (9999px): Badges, pills, status indicators
+- Circle (100%): Tab indicators, avatars
+
+## 6. Depth & Elevation
+
+| Level | Treatment | Use |
+|-------|-----------|-----|
+| Flat (Level 0) | No shadow, no border | Page background, text blocks |
+| Whisper (Level 1) | `1px solid rgba(0,0,0,0.1)` | Standard borders, card outlines, dividers |
+| Soft Card (Level 2) | 4-layer shadow stack (max opacity 0.04) | Content cards, feature blocks |
+| Deep Card (Level 3) | 5-layer shadow stack (max opacity 0.05, 52px blur) | Modals, featured panels, hero elements |
+| Focus (Accessibility) | `2px solid var(--focus-color)` outline | Keyboard focus on all interactive elements |
+
+**Shadow Philosophy**: Notion's shadow system uses multiple layers with extremely low individual opacity (0.01 to 0.05) that accumulate into soft, natural-looking elevation. The 4-layer card shadow spans from 1.04px to 18px blur, creating a gradient of depth rather than a single hard shadow. The 5-layer deep shadow extends to 52px blur at 0.05 opacity, producing ambient occlusion that feels like natural light rather than computer-generated depth. This layered approach makes elements feel embedded in the page rather than floating above it.
+
+### Decorative Depth
+- Hero section: decorative character illustrations (playful, hand-drawn style)
+- Section alternation: white to warm white (`#f6f5f4`) background shifts
+- No hard section borders -- separation comes from background color changes and spacing
+
+## 7. Responsive Behavior
+
+### Breakpoints
+| Name | Width | Key Changes |
+|------|-------|-------------|
+| Mobile Small | <400px | Tight single column, minimal padding |
+| Mobile | 400-600px | Standard mobile, stacked layout |
+| Tablet Small | 600-768px | 2-column grids begin |
+| Tablet | 768-1080px | Full card grids, expanded padding |
+| Desktop Small | 1080-1200px | Standard desktop layout |
+| Desktop | 1200-1440px | Full layout, maximum content width |
+| Large Desktop | >1440px | Centered, generous margins |
+
+### Touch Targets
+- Buttons use comfortable padding (8px-16px vertical)
+- Navigation links at 15px with adequate spacing
+- Pill badges have 8px horizontal padding for tap targets
+- Mobile menu toggle uses standard hamburger button
+
+### Collapsing Strategy
+- Hero: 64px display -> scales to 40px -> 26px on mobile, maintains proportional letter-spacing
+- Navigation: horizontal links + blue CTA -> hamburger menu
+- Feature cards: 3-column -> 2-column -> single column stacked
+- Product screenshots: maintain aspect ratio with responsive images
+- Trust bar logos: grid -> horizontal scroll on mobile
+- Footer: multi-column -> stacked single column
+- Section spacing: 80px+ -> 48px on mobile
+
+### Image Behavior
+- Workspace screenshots maintain whisper border at all sizes
+- Hero illustrations scale proportionally
+- Product screenshots use responsive images with consistent border radius
+- Full-width warm white sections maintain edge-to-edge treatment
+
+## 8. Accessibility & States
+
+### Focus System
+- All interactive elements receive visible focus indicators
+- Focus outline: `2px solid` with focus color + shadow level 200
+- Tab navigation supported throughout all interactive components
+- High contrast text: near-black on white exceeds WCAG AAA (>14:1 ratio)
+
+### Interactive States
+- **Default**: Standard appearance with whisper borders
+- **Hover**: Color shift on text, scale(1.05) on buttons, underline on links
+- **Active/Pressed**: scale(0.9) transform, darker background variant
+- **Focus**: Blue outline ring with shadow reinforcement
+- **Disabled**: Warm gray (`#a39e98`) text, reduced opacity
+
+### Color Contrast
+- Primary text (rgba(0,0,0,0.95)) on white: ~18:1 ratio
+- Secondary text (#615d59) on white: ~5.5:1 ratio (WCAG AA)
+- Blue CTA (#0075de) on white: ~4.6:1 ratio (WCAG AA for large text)
+- Badge text (#097fe8) on badge bg (#f2f9ff): ~4.5:1 ratio (WCAG AA for large text)
+
+## 9. Agent Prompt Guide
+
+### Quick Color Reference
+- Primary CTA: Notion Blue (`#0075de`)
+- Background: Pure White (`#ffffff`)
+- Alt Background: Warm White (`#f6f5f4`)
+- Heading text: Near-Black (`rgba(0,0,0,0.95)`)
+- Body text: Near-Black (`rgba(0,0,0,0.95)`)
+- Secondary text: Warm Gray 500 (`#615d59`)
+- Muted text: Warm Gray 300 (`#a39e98`)
+- Border: `1px solid rgba(0,0,0,0.1)`
+- Link: Notion Blue (`#0075de`)
+- Focus ring: Focus Blue (`#097fe8`)
+
+### Example Component Prompts
+- "Create a hero section on white background. Headline at 64px NotionInter weight 700, line-height 1.00, letter-spacing -2.125px, color rgba(0,0,0,0.95). Subtitle at 20px weight 600, line-height 1.40, color #615d59. Blue CTA button (#0075de, 4px radius, 8px 16px padding, white text) and ghost button (transparent bg, near-black text, underline on hover)."
+- "Design a card: white background, 1px solid rgba(0,0,0,0.1) border, 12px radius. Use shadow stack: rgba(0,0,0,0.04) 0px 4px 18px, rgba(0,0,0,0.027) 0px 2.025px 7.85px, rgba(0,0,0,0.02) 0px 0.8px 2.93px, rgba(0,0,0,0.01) 0px 0.175px 1.04px. Title at 22px NotionInter weight 700, letter-spacing -0.25px. Body at 16px weight 400, color #615d59."
+- "Build a pill badge: #f2f9ff background, #097fe8 text, 9999px radius, 4px 8px padding, 12px NotionInter weight 600, letter-spacing 0.125px."
+- "Create navigation: white header. NotionInter 15px weight 600 for links, near-black text. Blue pill CTA 'Get Notion free' right-aligned (#0075de bg, white text, 4px radius)."
+- "Design an alternating section layout: white sections alternate with warm white (#f6f5f4) sections. Each section has 64-80px vertical padding, max-width 1200px centered. Section heading at 48px weight 700, line-height 1.00, letter-spacing -1.5px."
+
+### Iteration Guide
+1. Always use warm neutrals -- Notion's grays have yellow-brown undertones (#f6f5f4, #31302e, #615d59, #a39e98), never blue-gray
+2. Letter-spacing scales with font size: -2.125px at 64px, -1.875px at 54px, -0.625px at 26px, normal at 16px
+3. Four weights: 400 (read), 500 (interact), 600 (emphasize), 700 (announce)
+4. Borders are whispers: 1px solid rgba(0,0,0,0.1) -- never heavier
+5. Shadows use 4-5 layers with individual opacity never exceeding 0.05
+6. The warm white (#f6f5f4) section background is essential for visual rhythm
+7. Pill badges (9999px) for status/tags, 4px radius for buttons and inputs
+8. Notion Blue (#0075de) is the only saturated color in core UI -- use it sparingly for CTAs and links
